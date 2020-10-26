@@ -20,3 +20,28 @@ while(True) :
 cam.release()
 out.release()
 cv2.destroyAllWindows
+
+#Code for displaying video which is easily adapted for images but i presume the easiest way to display a series of phase maps is to create and show a video haven't yet managed to get fullscreen but thats due to the resizing seeming to create the window to be larger than the actual screens resolution
+import numpy as np
+import cv2
+
+vid = cv2.VideoCapture(r'C:\users\user\Desktop\PHYS4028.mp4')
+ 
+if (vid.isOpened()== False):
+  print("Error opening video stream or file")
+ 
+
+while (vid.isOpened()):
+    ret, frame = vid.read()
+    if ret == True:
+ 
+        frame2 = cv2.resize(frame,(1600,900))
+        cv2.imshow('Frame', frame2)
+  
+        if cv2.waitKey(25) & 0xFF == ord('q'):
+            break
+    else:
+        break
+
+vid.release()
+cv2.destroyAllWindows()
