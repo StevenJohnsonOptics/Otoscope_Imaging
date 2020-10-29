@@ -45,3 +45,26 @@ while (vid.isOpened()):
 
 vid.release()
 cv2.destroyAllWindows()
+
+#Ive created 3 phase maps sinusoidally varying from 0 to 255 but when i plot them they arent in gray scale and im not sure how to do that but these are the current 3 phase maps
+
+w=(2*np.pi)/50
+Px1 = []
+for i in range(801):
+    Px1.append(127.5*np.sin(w*i)+127.5)
+repetitions = 600
+px1 = np.tile(Px1,(repetitions,1))
+
+
+Px2 = []
+for i in range(801):
+    Px2.append(127.5*np.sin(w*i+(2*np.pi/3))+127.5)
+repetitions = 600
+px2 = np.tile(Px2,(repetitions,1))
+
+
+Px3 = []
+for i in range(801):
+    Px3.append(127.5*np.sin(w*i+(4*np.pi/3))+127.5)
+repetitions = 600
+px3 = np.tile(Px3,(repetitions,1))
