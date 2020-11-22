@@ -41,3 +41,33 @@ while (vid.isOpened()):
 
 vid.release() 
 cv2.destroyAllWindows()
+
+#new code for camera, this allows for a snapshot to be taken when the space bar is hit and saves them which could probably be rewritten to automatically take them and analyse them
+cam = cv2.VideoCapture(0)
+
+cv2.namedWindow("test")
+
+img_counter = 0
+#captures and displays video which allows alignment before taking image
+while True:
+    ret, frame = cam.read()
+    if not ret:
+        print("failed to grab frame")
+        break
+    cv2.imshow("test", frame)
+
+    k = cv2.waitKey(1)
+    if k%256 == 27:
+        # closes it if ESC pressed
+        print("Escape hit, closing...")
+        break
+    elif k%256 == 32:
+        # takes and saves and image if SPACE pressed
+        img_name = "Fringe_pattern_{}.png".format(img_counter)
+        cv2.imwrite(img_name, frame)
+        print("{} written!".format(img_name))
+        img_counter += 1
+
+cam.release()
+
+cv2.destroyAllWindows()
