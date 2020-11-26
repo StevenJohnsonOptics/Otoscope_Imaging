@@ -33,7 +33,7 @@ fig=plt.figure()
 fig.canvas.manager.full_screen_toggle()
  # toggle fullscreen mode
 k = cv2.waitKey(1)
-#displaying the fringe patterns in a loop
+#displaying the fringe patterns in a loop with time set by plt.pause however the usual command to close this loop with a keystroke does not seem to be working
 while True:
     for i in range(3):
         
