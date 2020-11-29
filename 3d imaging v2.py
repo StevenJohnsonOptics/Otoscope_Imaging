@@ -42,8 +42,23 @@ while True:
         plt.xticks([])
         plt.tight_layout(pad=0, w_pad=0, h_pad=0)
         plt.pause(1)
-    if k == ord('q'):
-        break
+        ret,frameOut = cam.read()
+        frame[i] = np.sum(frameOut,axis=2)
+
+time.sleep(5)
+
+depth = np.arctan2(np.sqrt(3)*(frame.get(0)-frame.get(2)),2*frame.get(1)-frame.get(0)-frame.get(2))
+depth_uw = np.unwrap(depth)
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+y = np.arange(0,480,1)
+x = np.arange(0,640,1)
+X, Y = np.meshgrid(x, y)
+#zs = np.array(fun(np.ravel(X), np.ravel(Y)))
+Z = depth_uw.reshape(X.shape)
+
+ax.plot_surface(X, Y, Z)
    
     
    
