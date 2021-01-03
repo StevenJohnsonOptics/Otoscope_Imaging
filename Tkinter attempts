@@ -1,0 +1,92 @@
+#I have had multiple attempts at using Tkinter and hit many walls with actually projecting the fringe patterns. I have managed to open a tk window that opens automatically on a second monitor full screen but not been able to actually display the fringe pattern in this window. Here are the different ways i have tried to do this.
+# This is the simplest way, This calls upon the array itself but it instead just displays a black box but of the right dimensions
+
+import tkinter as tk
+import numpy as np
+from PIL import Image, ImageTk
+
+root = tk.Tk()
+
+array = I.get(1)
+img =  ImageTk.PhotoImage(image=Image.fromarray(array))
+
+canvas = tk.Canvas(root,width=1920,height=1080)
+canvas.pack()
+canvas.create_image(20,20, anchor="nw", image=img,)
+root.geometry("1920x1080+1910+0")
+root.mainloop()
+
+#This is a similar way but calls upon a saved image file of the fringe pattern. This actually displays the Image but the wrong dimensions and all the ways of altering the canvas size and image size seem to have no effect
+from tkinter import *
+from PIL import ImageTk, Image
+
+root = Tk()
+canvas = Canvas(root, width = 1920, height = 1080)
+canvas.pack()
+my_image = PhotoImage(file='C:\\Users\\user\\testsaveforimage2.png')
+canvas.create_image(-290,-430, anchor = NW, image = my_image)
+root.geometry("1920x1080+1910+0")
+root.mainloop()
+
+# This is a far more complicated way but probably the most likely way that calls upon the presaved image but again shows the image but wrong dimension
+from tkinter import *
+from PIL import Image, ImageTk
+
+ 
+class TryImage:
+    def __init__(self, parent, image_path=None):
+        self.image_path = image_path
+        self.parent = parent
+ 
+    def image_to_label(self):
+        self.bar = Frame(self.parent, relief=RIDGE, borderwidth=5)
+        self.bar.pack(fill=X, side=TOP)
+ 
+        self.bar.columnconfigure(0, weight=1)
+        self.bar.rowconfigure(0, weight=1)
+ 
+        self.icon = ImageTk.PhotoImage(Image.open(self.image_path))
+        self.icon_size = Label(self.bar)
+        self.icon_size.image = self.icon
+        self.icon_size.configure(image=self.icon)
+        self.icon_size.pack(side=LEFT)
+ 
+if __name__ == '__main__':
+    root = Tk()
+    ti = TryImage(root, r'C:\Users\user\Desktop\fringe_111.png')
+    ti.image_to_label()
+    root.geometry("1920x1080+1910+50")
+
+    root.mainloop()
+    
+    # And this is the final more complicated way which calls straight from the array again but again displays a black screen but right dimensions
+    from tkinter import *
+from PIL import Image, ImageTk
+
+ 
+class TryImage:
+    def __init__(self, parent, image_path=None):
+        self.image_path = image_path
+        self.parent = parent
+ 
+    def image_to_label(self):
+        self.bar = Frame(self.parent, relief=RIDGE, borderwidth=5)
+        self.bar.pack(fill=X, side=TOP)
+ 
+        self.bar.columnconfigure(0, weight=1)
+        self.bar.rowconfigure(0, weight=1)
+ 
+        self.icon = ImageTk.PhotoImage(Image.fromarray(self.image_path))
+        self.icon_size = Label(self.bar)
+        self.icon_size.image = self.icon
+        self.icon_size.configure(image=self.icon)
+        self.icon_size.pack(side=LEFT)
+ 
+if __name__ == '__main__':
+    root = Tk()
+    ti = TryImage(root, I.get(1))
+    ti.image_to_label()
+    root.geometry("1920x1080+1910+50")
+
+    root.mainloop()
+    #also with tkinter it seems if you write something that doesnt work then all the working methods then stop working as well until you close and reopen it all as it then says all "images 'pyimage(x)' does not exist" 
