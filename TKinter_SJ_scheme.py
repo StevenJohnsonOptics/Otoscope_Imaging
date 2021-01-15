@@ -27,7 +27,7 @@ szY = 480 #Size in y direction
 root = tk.Tk()
 #OPTOMA LV130 Mini Projector has screen size: WVGA (854 x 480)
 #The 1920 is my screen width, 
-root.geometry("854x1000+1910+0") 
+root.geometry("854x480+1910+0") 
 
 canvas = tk.Canvas(root,width=854,height=480)
 canvas.pack()
