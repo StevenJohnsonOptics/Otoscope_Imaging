@@ -47,10 +47,10 @@ for a,phs in enumerate(phase):
     canvas.create_image(0, 0, anchor="nw", image=img)
     
     root.update() # Show plot
+
+    time.sleep(1.0)    # Pause 
     ret,frameOut = cam.read()
     frame[a] = np.sum(frameOut,axis=2)
-    time.sleep(1.0)    # Pause 
-
 root.destroy()
 
 
