@@ -5,7 +5,7 @@ import time
 import tkinter as tk
 from PIL import Image, ImageTk
 import time
-
+from mpl_toolkits.mplot3d import Axes3D
 
 cam = cv2.VideoCapture(0)
 
@@ -41,13 +41,13 @@ frame = {}
 
 for a,phs in enumerate(phase):
     array = sinewave(resX, resY,period,phs)
-    array = array*128 + 127 
+    array = array*128 + 127 #Must scale between -1 to 1 and 0 to 255 
     
     img =  ImageTk.PhotoImage(Image.fromarray(array))
     canvas.create_image(0, 0, anchor="nw", image=img)
     
     root.update() # Show plot
-
+    
     time.sleep(1.0)    # Pause 
     ret,frameOut = cam.read()
     frame[a] = np.sum(frameOut,axis=2)
@@ -66,12 +66,3 @@ X, Y = np.meshgrid(x, y)
 Z = depth_uw.reshape(X.shape)
 
 ax.plot_surface(X, Y, Z)
-    
-   
-   
-
-   
-    
-#%%
-
-#%%
