@@ -51,7 +51,7 @@ for a,phs in enumerate(phase):
     time.sleep(1.0)    # Pause 
     ret,frameOut = cam.read()
     disp_image = Image.fromarray(frameOut)
-    filename = r'c:\Users\user\Desktop\Frame_tests\Mug2\Frame_'+str(a)+'.png'
+    filename = r'c:\Users\user\Desktop\Frame_tests\Mug2\Frame_'+str(a)+'.png' #saves into a folder which you manually designate before running, e.g change Mug2 to whatever
     disp_image.save(filename)
     frame[a] = np.sum(frameOut,axis=2)/(3*255)
 root.destroy()
