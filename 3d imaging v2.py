@@ -50,7 +50,7 @@ for a,phs in enumerate(phase):
     
     time.sleep(1.0)    # Pause 
     ret,frameOut = cam.read()
-    frame[a] = np.sum(frameOut,axis=2)
+    frame[a] = np.sum(frameOut,axis=2)/(3*255)
 root.destroy()
 
 
