@@ -50,20 +50,22 @@ for a,phs in enumerate(phase):
     
     time.sleep(1.0)    # Pause 
     ret,frameOut = cam.read()
-    disp_image = Image.fromarray(frameOut)
-    filename = r'c:\Users\user\Desktop\Frame_tests\Mug2\Frame_'+str(a)+'.png' #saves into a folder which you manually designate before running, e.g change Mug2 to whatever
-    disp_image.save(filename)
     frame[a] = np.sum(frameOut,axis=2)/(3*255)
+    disp_image = Image.fromarray(frameOut)
+    filename = r'c:\Users\user\Desktop\Frame_tests\Mug3\Frame_'+str(a)+'.png'
+    disp_image.save(filename)
 root.destroy()
 
+
+
 depth = np.arctan2(np.sqrt(3)*(frame.get(0)-frame.get(2)),2*frame.get(1)-frame.get(0)-frame.get(2))
+depth_uw = np.unwrap(depth)
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 y = np.arange(0,480,1)
 x = np.arange(0,640,1)
 X, Y = np.meshgrid(x, y)
-Z = depth.reshape(X.shape)
+Z = depth_uw.reshape(X.shape)
 
 ax.plot_surface(X, Y, Z)
-
