@@ -1,36 +1,30 @@
-# loading the images from a previous successful imaging
-fringe1 = cv2.imread(r'c:\Users\user\Desktop\Frame_tests\Mug2\Frame_0.png')
-fringe2 = cv2.imread(r'c:\Users\user\Desktop\Frame_tests\Mug2\Frame_1.png')
-fringe3 = cv2.imread(r'c:\Users\user\Desktop\Frame_tests\Mug2\Frame_2.png')
+fringe = {}
+for i in range(3):
+    fringe[i] = cv2.imread(r'c:\Users\user\Desktop\Frame_tests\Mug2\Frame_'+str(i)+'.png') #loading in the images from the folder only needs 'Mug2' manually changed to the right folder
+    frame[i] = np.asarray(fringe[i])
+    frame[i] = frame[i].astype(np.float32)
+    frame[i] = np.sum(frame[i],axis=2)
 
-frame1 = np.asarray(fringe1)
-frame2 = np.asarray(fringe2)
-frame3 = np.asarray(fringe3)
-frame1 = frame1.astype(np.float32)
-frame2 = frame2.astype(np.float32)
-frame3 = frame3.astype(np.float32)
-
-frame1 = np.sum(frame1,axis=2)
-frame2 = np.sum(frame2,axis=2)
-frame3 = np.sum(frame3,axis=2)
-
-
-
-depth = np.arctan2(np.sqrt(3)*(frame1-frame3),2*frame2-frame1-frame3)
+depth = np.arctan2(np.sqrt(3)*(frame.get(0)-frame.get(2)),2*frame.get(1)-frame.get(0)-frame.get(2))
 depth_uw = np.unwrap(depth)
-#attempting to implement the boolean masking
+
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 y = np.arange(0,480,1)
 x = np.arange(0,640,1)
 X, Y = np.meshgrid(x, y)
 z = depth_uw.reshape(X.shape)
+
 valid = z>0
 Z = z[valid]
-X = x[valid] #error arises here as it says there are too many indices for array
-Y = y[valid]
+X = X[valid]
+Y = Y[valid]
 
-ax.scatter(X,Y,Z)
+ax.scatter(X,Y,Z) # Plotting with scatter works but the computer clearly struggles to handle it as takes a while to load and moving the view is difficult but plot_surface doesn't seem to work
 ax.set_xlabel('X Axes')
 ax.set_ylabel('Y Axes')
 ax.set_zlabel('Z Axes')
+
+
+
+plt.show()
