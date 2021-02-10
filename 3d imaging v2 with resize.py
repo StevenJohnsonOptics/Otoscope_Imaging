@@ -135,7 +135,7 @@ X = X[valid]
 Y = Y[valid]
 colors = fullImg[valid]
 
-ax.scatter(X,Y,Z,marker = '.', c = colors)
+ax.scatter(X,Y,Z,marker = 'o', c = colors)
 ax.set_xlabel('X Axes')
 ax.set_ylabel('Y Axes')
 ax.set_zlabel('Z Axes')
