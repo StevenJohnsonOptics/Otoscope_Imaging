@@ -48,7 +48,7 @@ valid = v1*v2
 Z = z[valid]
 X = X[valid]
 Y = Y[valid]
-#Z= Z-150+X
+#Z= Z-150+X this line reduces the slope but this differs for every unwrap and thus needs rewritten to auto remove slope
 colours = fullimage[valid]
 
 ax.scatter(X,Y,Z,marker = '.', c = colours)
