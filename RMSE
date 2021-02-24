@@ -1,0 +1,20 @@
+fringe = {}
+frame = {}
+for i in range(3):
+    fringe[i] = cv2.imread(r'c:\Users\user\Desktop\Frame_tests\frequency\flat_wall50\Frame_'+str(i)+'.png')
+    frame[i] = np.asarray(fringe[i])
+    frame[i] = frame[i].astype(np.float32)
+    frame[i] = np.sum(frame[i],axis=2)
+
+depth = np.arctan2(np.sqrt(3)*(frame.get(0)-frame.get(2)),2*frame.get(1)-frame.get(0)-frame.get(2))
+depth_uw = np.unwrap(depth)
+
+n_sz = depth.shape[1]
+r_sz = depth.shape[0]
+n = np.arange(0,160,1)
+r = np.arange(0,120,1)
+
+n, r = np.meshgrid(n, r)
+#t = (n/16)-(10) again needs auto made from slope of image
+
+RMS = np.sqrt((1/19200)*(np.sum(np.square(depth_uw-(#value))))
