@@ -1,0 +1,61 @@
+fringe = {}
+frame = {}
+for i in range(3):
+    fringe[i] = cv2.imread(r'c:\Users\user\Desktop\Frame_tests\frequency\flat_wall50\Frame_'+str(i)+'.png')
+    frame[i] = np.asarray(fringe[i])
+    frame[i] = frame[i].astype(np.float32)
+    frame[i] = np.sum(frame[i],axis=2)
+
+depth = np.arctan2(np.sqrt(3)*(frame.get(0)-frame.get(2)),2*frame.get(1)-frame.get(0)-frame.get(2))
+depth_uw = depth
+x_sz = depth.shape[1]
+y_sz = depth.shape[0]
+
+for i in range(x_sz):
+
+    depth_uw[:,i] = np.unwrap(depth_uw[:,i])
+
+   
+
+for i in range(y_sz):
+
+    depth_uw[i,:] = np.unwrap(depth_uw[i,:])
+
+fullimage = frame.get(0)+frame.get(1)+frame.get(2)
+
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+y = np.arange(0,y_sz,1)
+x = np.arange(0,x_sz,1)
+X, Y = np.meshgrid(x, y)
+z = depth_uw.reshape(X.shape)
+
+t = np.zeros((1,x_sz))
+for i in range (x_sz):
+    t[0,1]+i
+
+slope = np.matmul(np.ones((y_sz,1)),t)
+z = z-slope
+
+z = cv2.flip(z,1)
+fullimage = cv2.flip(fullimage,1)
+
+v1 = fullimage>850
+v2 = z>-20
+valid = v1*v2
+
+Z = z[valid]
+X = X[valid]
+Y = Y[valid]
+#Z= Z-150+X
+colours = fullimage[valid]
+
+ax.scatter(X,Y,Z,marker = '.', c = colours)
+ax.set_xlabel('X Axes')
+ax.set_ylabel('Y Axes')
+ax.set_zlabel('Z Axes')
+ax.view_init(elev=-90., azim=-90)
+
+
+plt.show()
